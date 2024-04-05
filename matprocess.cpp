@@ -1,5 +1,7 @@
 #include "matprocess.hpp"
 
+QRgb MatProcess::pointsColor[windowXsize][windowYsize];
+
 MatProcess::MatProcess() {
   time.start();
   // pointMas = new Point[windowXsize * windowYsize];
