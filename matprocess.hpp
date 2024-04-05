@@ -11,9 +11,20 @@
 
 class MatProcess {
   // Q_OBJECT
- public:
-  MatProcess();
 
+private:
+    static QRgb pointsColor[windowXsize][windowYsize];
+public:
+    static QRgb getPoint(int _x, int _y){
+        return pointsColor[_x][_y];
+    }
+
+    static void setPoint(int _x, int _y, QRgb _color){
+        pointsColor[_x][_y] = _color;
+    }
+
+public:
+  MatProcess();
   QVector3D* vectorMas;
   QTime time;
   void randomize();
@@ -23,6 +34,7 @@ class MatProcess {
   void calculateFrame();
   void calculateDirectionVectors();
   void testing();
+
 };
 
 #endif  // MATPROCESS_HPP

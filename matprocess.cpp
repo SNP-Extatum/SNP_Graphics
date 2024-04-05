@@ -21,9 +21,10 @@ void MatProcess::randomize() {
   time.start();
   for (int x = 0; x < windowXsize; x++) {
 	for (int y = 0; y < windowYsize; y++) {
-	  pointsColor[x][y].red = QRandomGenerator::global()->generate() % 255;
-	  pointsColor[x][y].green = QRandomGenerator::global()->generate() % 255;
-	  pointsColor[x][y].blue = QRandomGenerator::global()->generate() % 255;
+        QRgb clr = qRgb(QRandomGenerator::global()->generate() % 255,
+                        QRandomGenerator::global()->generate() % 255,
+                        QRandomGenerator::global()->generate() % 255);
+        MatProcess::setPoint(x, y, clr);
 	}
   }
   qDebug() << time.elapsed() << " <- randomize";
@@ -37,9 +38,7 @@ void MatProcess::calculateFrame() {
 	  float X = (float)x / windowXsize * 2.0f - 1.0f;
 	  float Y = (float)y / windowYsize * 2.0f - 1.0f;
 	  if (X * X + Y * Y < 0.5) {
-		pointsColor[x][y].red = 100;
-		pointsColor[x][y].green = 100;
-		pointsColor[x][y].blue = 100;
+        setPoint(x, y, qRgb(100, 100, 100));
 	  }
 	}
   }
@@ -55,14 +54,12 @@ void MatProcess::testing() {
 
   for (int y = 0; y < windowYsize; y++) {
 	for (int x = 0; x < windowXsize; x++) {
-	  pointsColor[x][y].red = 255;
-	  pointsColor[x][y].green = 255;
-	  pointsColor[x][y].blue = 255;
+        setPoint(x, y, qRgb(255, 255, 255));
 	}
   }
-  qDebug() << "red" << pointsColor[150][500].red;
-  qDebug() << "green" << pointsColor[12][0].green;
-  qDebug() << "blue" << pointsColor[809][700].blue;
+  qDebug() << "red" << qRed(getPoint(150, 500));
+  qDebug() << "green" << qGreen(getPoint(12, 0));
+  qDebug() << "red" << qBlue(getPoint(809, 700));
 
   qDebug() << time.elapsed() << "ms <- ^ testing() ^";
 };
