@@ -12,11 +12,13 @@ SOURCES += \
     main.cpp \
     mainview.cpp \
     matprocess.cpp \
+    polyobject.cpp \
     windowqgv.cpp
 
 HEADERS += \
     mainview.hpp \
     matprocess.hpp \
+    polyobject.hpp \
     settings.hpp \
     windowqgv.hpp
 

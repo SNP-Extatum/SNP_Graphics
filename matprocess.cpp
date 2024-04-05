@@ -2,53 +2,47 @@
 
 QRgb MatProcess::pointsColor[windowXsize][windowYsize];
 
-MatProcess::MatProcess() {
-  time.start();
-  // pointMas = new Point[windowXsize * windowYsize];
-  // vectorMas = new QVector3D[windowXsize * windowYsize];
-  randomize();
-  cameraPoint.setX(0);
-  cameraPoint.setY(0);
-  cameraPoint.setZ(5);
-  cameraDirect.setX(1);
-  cameraDirect.setY(0);
-  cameraDirect.setZ(0);
-  viewAngle.setX(qDegreesToRadians(45.0));
-  viewAngle.setY(qDegreesToRadians(45.0));
-  qDebug() << time.elapsed() << " <- Creating MatProcess";
-}
+MatProcess::MatProcess() { time.start(); }
 
 void MatProcess::randomize() {
   qDebug() << " <- randomize";
   time.start();
   for (int x = 0; x < windowXsize; x++) {
 	for (int y = 0; y < windowYsize; y++) {
-        QRgb clr = qRgb(QRandomGenerator::global()->generate() % 255,
-                        QRandomGenerator::global()->generate() % 255,
-                        QRandomGenerator::global()->generate() % 255);
-        MatProcess::setPoint(x, y, clr);
+	  QRgb clr = qRgb(QRandomGenerator::global()->generate() % 255,
+					  QRandomGenerator::global()->generate() % 255,
+					  QRandomGenerator::global()->generate() % 255);
+	  MatProcess::setPoint(x, y, clr);
 	}
   }
   qDebug() << time.elapsed() << " <- randomize";
 }
 
-void MatProcess::calculateFrame() {
-  time.start();
+float MatProcess::clamp(float _value, float _min, float _max) {
+  return fmax(fmin(_value, _max), _min);
+}
 
+void MatProcess::calculateFrame() {
+  // time.start();
   for (int y = 0; y < windowYsize; y++) {
 	for (int x = 0; x < windowXsize; x++) {
-	  float X = (float)x / windowXsize * 2.0f - 1.0f;
-	  float Y = (float)y / windowYsize * 2.0f - 1.0f;
-	  if (X * X + Y * Y < 0.5) {
-        setPoint(x, y, qRgb(100, 100, 100));
+	  // vec2 uv = vec2(x, y) / vec2(windowXsize, windowYsize) * 2.0f - 1.0f;
+	  QVector2D uv =
+		  QVector2D(x, y) / QVector2D(windowXsize, windowYsize) * 2.0 -
+		  QVector2D(1, 1);
+	  uv.setX(uv.x() * aspect + (t % 2));
+	  if (uv.x() * uv.x() + uv.y() * uv.y() < 0.5) {
+		setPoint(x, y, qRgb(100, 100, 100));
+	  } else {
+		setPoint(x, y, qRgb(0, 0, 0));
 	  }
 	}
   }
-
-  qDebug() << time.elapsed() << " <- calculateFrame()";
+  ++t;
+  // allt += time.elapsed();
+  // qDebug() << 1000 / time.elapsed() << " <- FPS-calculating";
+  // qDebug() << 1000 / (allt / t) << " <- FPS-mid-calculating";
 }
-
-void MatProcess::calculateDirectionVectors() {}
 
 void MatProcess::testing() {
   qDebug() << "0 ms <- v testing() v";
@@ -56,12 +50,14 @@ void MatProcess::testing() {
 
   for (int y = 0; y < windowYsize; y++) {
 	for (int x = 0; x < windowXsize; x++) {
-        setPoint(x, y, qRgb(255, 255, 255));
+	  float X = (float)x / windowXsize * 2.0f - 1.0f;
+	  float Y = (float)y / windowYsize * 2.0f - 1.0f;
+	  X *= aspect;
+	  if (X * X + Y * Y < 1.0) {
+		setPoint(x, y, qRgb(100, 100, 100));
+	  }
 	}
   }
-  qDebug() << "red" << qRed(getPoint(150, 500));
-  qDebug() << "green" << qGreen(getPoint(12, 0));
-  qDebug() << "red" << qBlue(getPoint(809, 700));
 
   qDebug() << time.elapsed() << "ms <- ^ testing() ^";
 };

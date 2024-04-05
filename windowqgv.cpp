@@ -12,6 +12,8 @@ WindowQGV::WindowQGV() {
   setScene(&mainScene);
   mainScene.setItemIndexMethod(QGraphicsScene::NoIndex);
   initializeScene();
+
+  connect(&paintTimer, &QTimer::timeout, this, &WindowQGV::drawScene);
 }
 
 void WindowQGV::initializeScene() {
@@ -22,11 +24,21 @@ void WindowQGV::initializeScene() {
 void WindowQGV::keyPressEvent(QKeyEvent* event) {
   switch (event->key()) {
 	case Qt::Key_Space:
-	  //matProcess.randomize();
-	  //matProcess.calculateFrame();
-		  matProcess.testing ();
+	  if (paintTimer.isActive()) {
+		paintTimer.stop();
+	  } else {
+		paintTimer.start(20);
+	  }
+	  break;
+	case Qt::Key_R:
+	  matProcess.randomize();
 	  mainView.update();
-	  qDebug() << "UPDATE!";
 	  break;
   }
+}
+void WindowQGV::drawScene() {
+  // FPStime.start();
+  matProcess.calculateFrame();
+  mainView.update();
+  // qDebug() << FPStime.elapsed() << " <- FPS";
 }

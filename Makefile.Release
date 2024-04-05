@@ -524,7 +524,15 @@ release/mainview.o: mainview.cpp mainview.hpp \
 		../../5.12.12/mingw73_64/include/QtCore/QRandomGenerator \
 		../../5.12.12/mingw73_64/include/QtCore/qrandom.h \
 		../../5.12.12/mingw73_64/include/QtCore/QTime \
-		../../5.12.12/mingw73_64/include/QtCore/qdatetime.h
+		../../5.12.12/mingw73_64/include/QtCore/qdatetime.h \
+		matprocess.hpp \
+		../../5.12.12/mingw73_64/include/QtCore/QPointF \
+		../../5.12.12/mingw73_64/include/QtGui/QVector2D \
+		../../5.12.12/mingw73_64/include/QtGui/qvector2d.h \
+		../../5.12.12/mingw73_64/include/QtGui/QVector3D \
+		../../5.12.12/mingw73_64/include/QtGui/qvector3d.h \
+		../../5.12.12/mingw73_64/include/QtCore/QtMath \
+		../../5.12.12/mingw73_64/include/QtCore/qmath.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o release\mainview.o mainview.cpp
 
 release/matprocess.o: matprocess.cpp matprocess.hpp \

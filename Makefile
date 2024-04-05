@@ -210,6 +210,7 @@ Makefile: SNP_Graphics.pro ../../5.12.12/mingw73_64/mkspecs/win32-g++/qmake.conf
 		../../5.12.12/mingw73_64/mkspecs/features/qt_config.prf \
 		../../5.12.12/mingw73_64/mkspecs/win32-g++/qmake.conf \
 		../../5.12.12/mingw73_64/mkspecs/features/spec_post.prf \
+		.qmake.stash \
 		../../5.12.12/mingw73_64/mkspecs/features/exclusive_builds.prf \
 		../../5.12.12/mingw73_64/mkspecs/features/toolchain.prf \
 		../../5.12.12/mingw73_64/mkspecs/features/default_pre.prf \
@@ -385,6 +386,7 @@ Makefile: SNP_Graphics.pro ../../5.12.12/mingw73_64/mkspecs/win32-g++/qmake.conf
 ../../5.12.12/mingw73_64/mkspecs/features/qt_config.prf:
 ../../5.12.12/mingw73_64/mkspecs/win32-g++/qmake.conf:
 ../../5.12.12/mingw73_64/mkspecs/features/spec_post.prf:
+.qmake.stash:
 ../../5.12.12/mingw73_64/mkspecs/features/exclusive_builds.prf:
 ../../5.12.12/mingw73_64/mkspecs/features/toolchain.prf:
 ../../5.12.12/mingw73_64/mkspecs/features/default_pre.prf:
