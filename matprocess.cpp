@@ -1,8 +1,22 @@
 #include "matprocess.hpp"
 
 QRgb MatProcess::pointsColor[windowXsize][windowYsize];
+Vec3 MatProcess::cameraBasicVectors[windowXsize][windowYsize];
+Vec3 MatProcess::cameraCurrentVectors[windowXsize][windowYsize];
 
-MatProcess::MatProcess() { time.start(); }
+MatProcess::MatProcess() {
+  time.start();
+
+  updateFocusPlate();
+
+  qDebug() << time.elapsed() << " <- MatProcess()";
+
+  time.start();
+  updateRotatedPlate();
+  qDebug() << time.elapsed() << " <- MatProcess()";
+
+  // time.start();
+}
 
 void MatProcess::randomize() {
   qDebug() << " <- randomize";
@@ -18,30 +32,78 @@ void MatProcess::randomize() {
   qDebug() << time.elapsed() << " <- randomize";
 }
 
-float MatProcess::clamp(float _value, float _min, float _max) {
-  return fmax(fmin(_value, _max), _min);
+void MatProcess::setCameraShift(Vec3 _shift) {
+  cameraShift = cameraShift + _shift;
+}
+
+void MatProcess::setCameraDirection(Vec2 _dir) {
+  cameraDirectionShift = cameraDirectionShift + _dir;
+  updateRotatedPlate();
+}
+
+void MatProcess::updateFocusPlate() {
+  Vec2 shift = Vec2(tan(focus) / (windowXsize / 2));
+  // shift.y = shift.x / aspect;
+  Vec3 startPoint =
+	  Vec3(cameraPosition.x + 1, cameraPosition.y + shift.x * (windowXsize / 2),
+		   cameraPosition.z + shift.y * (windowYsize / 2));
+  Vec3 currentPoint = startPoint;
+  for (int x = 0; x < windowXsize; x++) {
+	for (int y = 0; y < windowYsize; y++) {
+	  currentPoint.y = startPoint.y - shift.x * x;
+	  currentPoint.z = startPoint.z - shift.y * y;
+	  cameraBasicVectors[x][y] =
+		  VecFunctions::norm(currentPoint - cameraPosition);
+	}
+  }
+}
+
+void MatProcess::updateRotatedPlate() {
+  for (int x = 0; x < windowXsize; x++) {
+	for (int y = 0; y < windowYsize; y++) {
+	  cameraCurrentVectors[x][y] =
+		  VecFunctions::rotateZ(cameraBasicVectors[x][y], cameraDirection.x);
+	  cameraCurrentVectors[x][y] =
+		  VecFunctions::rotateY(cameraCurrentVectors[x][y], cameraDirection.y);
+	}
+  }
 }
 
 void MatProcess::calculateFrame() {
   // time.start();
+  // sphere.setMainPoint(t / 10.0, 0, 1);
+  cameraPosition.setVec3(cameraPosition.x + cameraShift.x * cameraSpeed,
+						 cameraPosition.y + cameraShift.y * cameraSpeed,
+						 cameraPosition.z + cameraShift.z * cameraSpeed);
+  cameraDirection.setVec2(cameraDirection.x + cameraDirectionShift.x,
+						  cameraDirection.y + cameraDirectionShift.y);
+
+  Vec2 crossed = Vec2(-1);
   for (int y = 0; y < windowYsize; y++) {
 	for (int x = 0; x < windowXsize; x++) {
-	  // vec2 uv = vec2(x, y) / vec2(windowXsize, windowYsize) * 2.0f - 1.0f;
-	  QVector2D uv =
-		  QVector2D(x, y) / QVector2D(windowXsize, windowYsize) * 2.0 -
-		  QVector2D(1, 1);
-	  uv.setX(uv.x() * aspect + (t % 2));
-	  if (uv.x() * uv.x() + uv.y() * uv.y() < 0.5) {
-		setPoint(x, y, qRgb(100, 100, 100));
-	  } else {
-		setPoint(x, y, qRgb(0, 0, 0));
+	  crossed = sphere.calculateSphere(cameraPosition - sphere.getMainPoint(),
+									   cameraCurrentVectors[x][y],
+									   sphere.getRadius());
+	  // qDebug() << crossed.x;
+	  // qDebug() << crossed.y;
+	  if (crossed.x > 0)
+		MatProcess::setPoint(x, y, sphere.getColor());
+	  else {
+		crossed =
+			plane.calculatePlane(cameraPosition, cameraCurrentVectors[x][y],
+								 plane.getMainPoint(), 1);
+		if (crossed.x > 0)
+		  MatProcess::setPoint(x, y, plane.getColor());
+		else
+		  MatProcess::setPoint(x, y, qRgb(135, 206, 235));
 	  }
 	}
   }
-  ++t;
-  // allt += time.elapsed();
-  // qDebug() << 1000 / time.elapsed() << " <- FPS-calculating";
-  // qDebug() << 1000 / (allt / t) << " <- FPS-mid-calculating";
+
+  // qDebug() << ++t;
+  //  allt += time.elapsed();
+  //  qDebug() << 1000 / time.elapsed() << " <- FPS-calculating";
+  //  qDebug() << 1000 / (allt / t) << " <- FPS-mid-calculating";
 }
 
 void MatProcess::testing() {

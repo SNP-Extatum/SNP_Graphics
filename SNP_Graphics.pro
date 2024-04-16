@@ -12,14 +12,24 @@ SOURCES += \
     main.cpp \
     mainview.cpp \
     matprocess.cpp \
-    polyobject.cpp \
+    plane.cpp \
+    sceneobject.cpp \
+    sphere.cpp \
+    vec2.cpp \
+    vec3.cpp \
+    vecfunctions.cpp \
     windowqgv.cpp
 
 HEADERS += \
     mainview.hpp \
     matprocess.hpp \
-    polyobject.hpp \
+    plane.hpp \
+    sceneobject.hpp \
     settings.hpp \
+    sphere.hpp \
+    vec2.hpp \
+    vec3.hpp \
+    vecfunctions.hpp \
     windowqgv.hpp
 
 FORMS +=

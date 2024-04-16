@@ -7,25 +7,18 @@
 #include <QVector3D>
 #include <QtMath>
 
+#include "plane.hpp"
 #include "settings.hpp"
-
-struct vec2 {
-  float x, y;
-
-  vec2(float _value) : x(_value), y(_value) {}
-  vec2(float _x, float _y) : x(_x), y(_y) {}
-
-  vec2 operator+(vec2 const& other) { return vec2(x + other.x, y + other.y); }
-  vec2 operator-(vec2 const& other) { return vec2(x - other.x, y - other.y); }
-  vec2 operator*(vec2 const& other) { return vec2(x * other.x, y * other.y); }
-  vec2 operator/(vec2 const& other) { return vec2(x / other.x, y / other.y); }
-};
+#include "sphere.hpp"
+#include "vecfunctions.hpp"
 
 class MatProcess {
   // Q_OBJECT
 
  private:
   static QRgb pointsColor[windowXsize][windowYsize];
+  static Vec3 cameraBasicVectors[windowXsize][windowYsize];
+  static Vec3 cameraCurrentVectors[windowXsize][windowYsize];
 
  public:
   static QRgb getPoint(int _x, int _y) { return pointsColor[_x][_y]; }
@@ -39,12 +32,25 @@ class MatProcess {
   void calculateFrame();
   void testing();
   void randomize();
+  void setCameraShift(Vec3 _shift);
+  void setCameraDirection(Vec2 _dir);
+
+  void updateFocusPlate();
+  void updateRotatedPlate();
 
  private:
+  Sphere sphere;
+  Plane plane;
   QTime time;
   int t = 0;
   int allt = 0;
-  float clamp(float _value, float _min, float _max);
+  Vec3 cameraPosition = Vec3(0, 0, 1);
+  Vec2 cameraDirection = Vec2(0, 0);  // в радианах угол наклона камеры
+  Vec3 cameraShift = Vec3(0);
+  Vec2 cameraDirectionShift = Vec2(0, 0);
+  double cameraSpeed = 0.05;
+
+  double focus = PI / 4;  // in radians from 0 to PI/2
 };
 
 #endif  // MATPROCESS_HPP

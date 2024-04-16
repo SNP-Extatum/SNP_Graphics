@@ -19,6 +19,7 @@ class WindowQGV : public QGraphicsView {
   QTimer paintTimer;
   void initializeScene();
   void keyPressEvent(QKeyEvent* event);
+  void keyReleaseEvent(QKeyEvent* event);
 
   MainView mainView;
   QGraphicsScene mainScene;
