@@ -6,7 +6,7 @@
 class Plane : public SceneObject {
  public:
   Plane();
-  double calculatePlane(Vec3 ro, Vec3 rd, Vec3 p, float w);
+  double calculatePlane(Vec3 ro, Vec3 rd);
 };
 
 #endif  // PLANE_HPP

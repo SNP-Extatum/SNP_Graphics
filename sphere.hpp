@@ -9,7 +9,7 @@ class Sphere : public SceneObject {
   Sphere();
   void setRadius(double _radius);
   double getRadius();
-  Vec2 calculateSphere(Vec3 ro, Vec3 rd, float r);
+  Vec2 calculateSphere(Vec3 ro, Vec3 rd);
 
  private:
   double radius = 1;

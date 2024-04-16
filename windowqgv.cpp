@@ -32,98 +32,85 @@ void WindowQGV::keyPressEvent(QKeyEvent* event) {
 	  break;
 	case Qt::Key_R:
 	  matProcess.randomize();
-	  mainView.update();
 	  break;
 	case Qt::Key_W:
-	  matProcess.setCameraShift(Vec3(1, 0, 0));
-	  mainView.update();
+	  matProcess.setCameraMoveForward(true);
 	  break;
 	case Qt::Key_S:
-	  matProcess.setCameraShift(Vec3(-1, 0, 0));
-	  mainView.update();
+	  matProcess.setCameraMoveBack(true);
 	  break;
 	case Qt::Key_A:
-	  matProcess.setCameraShift(Vec3(0, 1, 0));
-	  mainView.update();
+	  matProcess.setCameraMoveRight(true);
 	  break;
 	case Qt::Key_D:
-	  matProcess.setCameraShift(Vec3(0, -1, 0));
-	  mainView.update();
+	  matProcess.setCameraMoveLeft(true);
 	  break;
 	case Qt::Key_Shift:
-	  matProcess.setCameraShift(Vec3(0, 0, 1));
-	  mainView.update();
+	  matProcess.setCameraMoveDown(true);
 	  break;
 	case Qt::Key_Control:
-	  matProcess.setCameraShift(Vec3(0, 0, -1));
-	  mainView.update();
+	  matProcess.setCameraMoveUp(true);
 	  break;
 	case Qt::Key_Right:
-	  matProcess.setCameraDirection(Vec2(-0.01, 0));
-	  mainView.update();
+	  matProcess.setCameraMoveAroundZto(true);
 	  break;
 	case Qt::Key_Left:
-	  matProcess.setCameraDirection(Vec2(0.01, 0));
-	  mainView.update();
+	  matProcess.setCameraMoveAroundZfrom(true);
 	  break;
 	case Qt::Key_Up:
-	  matProcess.setCameraDirection(Vec2(0, 0.01));
-	  mainView.update();
+	  matProcess.setCameraMoveAroundYfrom(true);
 	  break;
 	case Qt::Key_Down:
-	  matProcess.setCameraDirection(Vec2(0, -0.01));
-	  mainView.update();
+	  matProcess.setCameraMoveAroundYto(true);
 	  break;
   }
+
+  // matProcess.moveCamera();
+  // mainView.update();
 }
 
 void WindowQGV::keyReleaseEvent(QKeyEvent* event) {
   switch (event->key()) {
 	case Qt::Key_W:
-	  matProcess.setCameraShift(Vec3(-1, 0, 0));
-	  mainView.update();
+	  matProcess.setCameraMoveForward(false);
 	  break;
 	case Qt::Key_S:
-	  matProcess.setCameraShift(Vec3(1, 0, 0));
-	  mainView.update();
+	  matProcess.setCameraMoveBack(false);
 	  break;
 	case Qt::Key_A:
-	  matProcess.setCameraShift(Vec3(0, -1, 0));
-	  mainView.update();
+	  matProcess.setCameraMoveRight(false);
 	  break;
 	case Qt::Key_D:
-	  matProcess.setCameraShift(Vec3(0, 1, 0));
-	  mainView.update();
+	  matProcess.setCameraMoveLeft(false);
 	  break;
 	case Qt::Key_Shift:
-	  matProcess.setCameraShift(Vec3(0, 0, -1));
-	  mainView.update();
+	  matProcess.setCameraMoveDown(false);
 	  break;
 	case Qt::Key_Control:
-	  matProcess.setCameraShift(Vec3(0, 0, 1));
-	  mainView.update();
+	  matProcess.setCameraMoveUp(false);
 	  break;
 	case Qt::Key_Right:
-	  matProcess.setCameraDirection(Vec2(0.01, 0));
-	  mainView.update();
+	  matProcess.setCameraMoveAroundZto(false);
 	  break;
 	case Qt::Key_Left:
-	  matProcess.setCameraDirection(Vec2(-0.01, 0));
-	  mainView.update();
+	  matProcess.setCameraMoveAroundZfrom(false);
 	  break;
 	case Qt::Key_Up:
-	  matProcess.setCameraDirection(Vec2(0, -0.01));
-	  mainView.update();
+	  matProcess.setCameraMoveAroundYfrom(false);
 	  break;
 	case Qt::Key_Down:
-	  matProcess.setCameraDirection(Vec2(0, 0.01));
-	  mainView.update();
+	  matProcess.setCameraMoveAroundYto(false);
+
 	  break;
   }
+  // matProcess.moveCamera();
+  // mainView.update();
 }
 
 void WindowQGV::drawScene() {
   // FPStime.start();
+  matProcess.moveCamera();
+
   matProcess.calculateFrame();
   mainView.update();
   // qDebug() << FPStime.elapsed() << " <- FPS";

@@ -17,6 +17,27 @@ class Vec2 {
   Vec2 operator-(Vec2 const& other) { return Vec2(x - other.x, y - other.y); }
   Vec2 operator*(Vec2 const& other) { return Vec2(x * other.x, y * other.y); }
   Vec2 operator/(Vec2 const& other) { return Vec2(x / other.x, y / other.y); }
+
+  Vec2& operator+=(Vec2 const& other) {
+	x += other.x;
+	y += other.y;
+	return *this;
+  }
+  Vec2& operator-=(Vec2 const& other) {
+	x -= other.x;
+	y -= other.y;
+	return *this;
+  }
+  Vec2& operator*=(Vec2 const& other) {
+	x *= other.x;
+	y *= other.y;
+	return *this;
+  }
+  Vec2& operator/=(Vec2 const& other) {
+	x /= other.x;
+	y /= other.y;
+	return *this;
+  }
 };
 
 #endif  // VEC2_HPP
