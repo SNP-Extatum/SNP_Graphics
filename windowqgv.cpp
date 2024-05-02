@@ -27,7 +27,7 @@ void WindowQGV::keyPressEvent(QKeyEvent* event) {
 	  if (paintTimer.isActive()) {
 		paintTimer.stop();
 	  } else {
-		paintTimer.start(20);
+		paintTimer.start(10);
 	  }
 	  break;
 	case Qt::Key_R:
@@ -40,10 +40,10 @@ void WindowQGV::keyPressEvent(QKeyEvent* event) {
 	  matProcess.setCameraMoveBack(true);
 	  break;
 	case Qt::Key_A:
-	  matProcess.setCameraMoveRight(true);
+	  matProcess.setCameraMoveLeft(true);
 	  break;
 	case Qt::Key_D:
-	  matProcess.setCameraMoveLeft(true);
+	  matProcess.setCameraMoveRight(true);
 	  break;
 	case Qt::Key_Shift:
 	  matProcess.setCameraMoveDown(true);
@@ -58,10 +58,10 @@ void WindowQGV::keyPressEvent(QKeyEvent* event) {
 	  matProcess.setCameraMoveAroundZfrom(true);
 	  break;
 	case Qt::Key_Up:
-	  matProcess.setCameraMoveAroundYfrom(true);
+	  matProcess.setCameraMoveAroundYto(true);
 	  break;
 	case Qt::Key_Down:
-	  matProcess.setCameraMoveAroundYto(true);
+	  matProcess.setCameraMoveAroundYfrom(true);
 	  break;
   }
 
@@ -78,10 +78,10 @@ void WindowQGV::keyReleaseEvent(QKeyEvent* event) {
 	  matProcess.setCameraMoveBack(false);
 	  break;
 	case Qt::Key_A:
-	  matProcess.setCameraMoveRight(false);
+	  matProcess.setCameraMoveLeft(false);
 	  break;
 	case Qt::Key_D:
-	  matProcess.setCameraMoveLeft(false);
+	  matProcess.setCameraMoveRight(false);
 	  break;
 	case Qt::Key_Shift:
 	  matProcess.setCameraMoveDown(false);
@@ -96,10 +96,10 @@ void WindowQGV::keyReleaseEvent(QKeyEvent* event) {
 	  matProcess.setCameraMoveAroundZfrom(false);
 	  break;
 	case Qt::Key_Up:
-	  matProcess.setCameraMoveAroundYfrom(false);
+	  matProcess.setCameraMoveAroundYto(false);
 	  break;
 	case Qt::Key_Down:
-	  matProcess.setCameraMoveAroundYto(false);
+	  matProcess.setCameraMoveAroundYfrom(false);
 
 	  break;
   }

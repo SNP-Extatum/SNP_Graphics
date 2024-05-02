@@ -5,7 +5,7 @@
 #include <QRandomGenerator>
 #include <QTime>
 
-#define small
+#define mid
 
 #if defined(small)
 #define windowXsize 640

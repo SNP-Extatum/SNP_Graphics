@@ -16,10 +16,11 @@ class SceneObject {
   void setAngleZ(double _anZ);
   void setColor(QRgb _color);
   QRgb getColor();
-  void updatePosition(Vec3 _shift, double _sinY, double _cosY, double _sinZ,
-					  double _cosZ);
+  virtual void updatePosition(Vec3 _shift, double _sinY, double _cosY,
+							  double _sinZ, double _cosZ);
+  // virtual
 
- private:
+ protected:
   Vec3 mainPoint = Vec3(0, 0, 0);
   Vec3 currPoint = Vec3(0, 0, 0);
   Vec3 angles = Vec3(0);

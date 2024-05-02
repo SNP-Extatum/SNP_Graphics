@@ -27,6 +27,10 @@ class VecFunctions {
   static float dot(Vec3 const& a, Vec3 const& b) {
 	return a.x * b.x + a.y * b.y + a.z * b.z;
   }
+  static Vec3 cross(Vec3 const& a, Vec3 const& b) {
+	return Vec3(a.y * b.z - a.z * b.y, a.z * b.x - a.x * b.z,
+				a.x * b.y - a.y * b.x);
+  }
   static Vec3 abs(Vec3 const& v) {
 	return Vec3(fabs(v.x), fabs(v.y), fabs(v.z));
   }

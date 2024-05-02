@@ -14,9 +14,13 @@ class Vec2 {
   };
 
   Vec2 operator+(Vec2 const& other) { return Vec2(x + other.x, y + other.y); }
+  Vec2 operator+(double const& other) { return Vec2(x + other, y + other); }
   Vec2 operator-(Vec2 const& other) { return Vec2(x - other.x, y - other.y); }
+  Vec2 operator-(double const& other) { return Vec2(x - other, y - other); }
   Vec2 operator*(Vec2 const& other) { return Vec2(x * other.x, y * other.y); }
+  Vec2 operator*(double const& other) { return Vec2(x * other, y * other); }
   Vec2 operator/(Vec2 const& other) { return Vec2(x / other.x, y / other.y); }
+  Vec2 operator/(double const& other) { return Vec2(x / other, y / other); }
 
   Vec2& operator+=(Vec2 const& other) {
 	x += other.x;

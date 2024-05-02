@@ -24,13 +24,5 @@ QRgb SceneObject::getColor() { return color; }
 
 void SceneObject::updatePosition(Vec3 _shift, double _sinY, double _cosY,
 								 double _sinZ, double _cosZ) {
-  currPoint = mainPoint - _shift;
-  // around Y
-  Vec3 savePoint = currPoint;
-  currPoint.x = savePoint.x * _cosY - savePoint.z * _sinY;
-  currPoint.z = savePoint.x * _sinY + savePoint.z * _cosY;
-  // around Z
-  savePoint = currPoint;
-  currPoint.x = savePoint.x * _cosZ - savePoint.y * _sinZ;
-  currPoint.y = savePoint.x * _sinZ + savePoint.y * _cosZ;
+  return;
 }

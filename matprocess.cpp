@@ -17,8 +17,13 @@ MatProcess::MatProcess() {
   sphere2.setMainPoint(5, 5, 1);
   sphere2.setColor(qRgb(0, 150, 0));
   spheresList.append(sphere2);
-  Plane plane;
-  planesList.append(plane);
+  Sphere sphere3;
+  sphere3.setMainPoint(5, 0, 5);
+  sphere3.setColor(qRgb(200, 200, 200));
+  spheresList.append(sphere3);
+
+  // Plane plane;
+  // planesList.append(plane);
 
   // time.start();
 }
@@ -42,7 +47,7 @@ void MatProcess::moveCamera() {
 	  Vec2(cameraSpeed * ((int)isMoveAroundYto - (int)isMoveAroundYfrom),
 		   cameraSpeed * ((int)isMoveAroundZto - (int)isMoveAroundZfrom));
   cameraPosition += Vec3(cameraSpeed * ((int)isMoveForward - (int)isMoveBack),
-						 cameraSpeed * ((int)isMoveRight - (int)isMoveLeft),
+						 cameraSpeed * ((int)isMoveLeft - (int)isMoveRight),
 						 cameraSpeed * ((int)isMoveUp - (int)isMoveDown));
   double sinY = sin(cameraDirection.x);
   double cosY = cos(cameraDirection.x);
